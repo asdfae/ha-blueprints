@@ -1,0 +1,177 @@
+HOUSE LAYOUT - BASE GRID
+========================
+
+House type: suterränghus (Swedish). The house is on a slope.
+The basement is partially below the ground.
+Outer wall: 16 m (east-west) x 8 m (north-south).
+Inner area: approximately 111 m2.
+Scale: one cell (". ") is 0.5 m x 0.5 m. One metre is two cells.
+View: the north side is at the bottom. The north side faces the viewer.
+The viewer looks south. Thus, east is on the left and west is on the right.
+
+LEVELS
+------
+All levels are relative to the main floor (0.0 m).
+- Main floor: 0.0 m.
+- Altan (south deck): 0.0 m, the same level as the main floor.
+- Ground at the north entrance: approximately -0.9 m.
+- Top of the basement: approximately 0.9 m above the ground at the north entrance.
+- Basement floor: -2.4 m. The basement height is 2.4 m.
+
+GROUND
+------
+The ground is low on the east side and high on the west side.
+- East wall: approximately -2.4 m along the full wall. The east side of the basement is fully above the ground.
+- South wall: -2.4 m at x 0 m. The ground goes up to 0.0 m at x 4 m.
+  From x 4 m to x 9 m, the ground is at 0.0 m (the altan level).
+- North wall: approximately -0.9 m at the entrance (x 6.5 m to 7.5 m).
+- Not known (assumptions, correct them if necessary):
+  - North wall from x 0 m to x 4 m: the ground goes up from -2.4 m to -0.9 m.
+  - South wall from x 9 m to x 16 m: 0.0 m.
+  - West wall: 0.0 m at the south corner, -0.9 m at the north corner.
+
+HOW TO FILL IN THE GRID
+-----------------------
+1. Draw the inner walls. Use "|" for vertical walls and "-" for horizontal walls.
+2. Put "+" where two walls meet.
+3. Write the Home Assistant area name in each room (for example "Kitchen").
+4. Mark each door with "D".
+5. Mark each window with "W".
+6. Mark the inside stairs with "S" on all cells of the stairs.
+7. Do not change the outer wall.
+8. Correct the position of the main entrance ("E") and the outside stairs ("s") if necessary.
+9. If a floor does not exist, delete its grid.
+
+LEGEND
+------
++  corner or wall junction
+|  vertical wall
+-  horizontal wall
+D  door
+DDD  arched opening with a round top (no door). Three cells or more in a line.
+d  French balcony door (no railing)
+W  window
+w  small window, high on the wall
+S  inside stairs
+E  main entrance
+s  outside stairs
+~  ground level (elevation only)
+=  main floor level (elevation only)
+.  empty cell (0.5 m x 0.5 m)
+
+FLOOR: Main floor (entrance level, 0.0 m)
+
+                SOUTH (back of the house, far from the viewer)
+       0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  m
+      +---www-------------------------W-D------------W----------d--W---+
+      |. . . . . . . . . . . . . . . . . . . . . | . . . | . . . . . . |
+   7 mW. . . . . . . . . . . . . . . . . . . . . | . . . | . . . . . . |
+      W. . . . . . . . Kitchen . . . . . . . . . | Gard. | . . . . . . |
+   6 mW. . . . . . . . . . . . . . . . . . . . . | . . . | Bedroom . . |
+      W. . . . . . . . . . . . . . . . . . . . . | . . . | . . . . . . |
+   5 m|. . . . . - - - - - - - D D D - - - - - - - - - D | . . . . . . |
+      |. . . . . . . . . . . D . . . . . . . . . . . . . D . . . . . . |
+   4 m|. . . . . . . . . . . D . . . . . . . . . . . . . | . . . . . . |
+EAST  |. . . . . . . . . . . D . . Hallen. . . . . . . . | - - - - - - |  WEST
+   3 m|. . . . . . . . . . . | . . . . . . . . . . . . . D . . . . . . |
+      D. . . . . . . . . . . | . . . . S S | - - - - D - | . . . . . . |
+   2 mW. . . . . . . . . . . | . . . . S S | . . . . . . | . . . . . . |
+      WBiblioteket . . . . . | . . . . S S | Bathroom. . | Office  . . |
+   1 mW. . . . . . . . . . . | . . . . S S | . . . . . . | . . . . . . W
+      W. . . . . . . . . . . | . . . . S S | . . . . . . | . . . . . . |
+   0 mW. . . . . . . . . . . | . . . . S S | . . . . . . | . . . . . . |
+      +--------------------------EEEE-------------W--------------W-----+
+                               s s s s
+   out                         s s s s
+                               s s s s
+                 NORTH (front of the house, faces the viewer)
+
+Main entrance (E): on the north wall, 6.5 m to 7.5 m from the east wall.
+The entrance is a small distance east of the center of the north wall.
+Outside stairs (s): from the ground (-0.9 m) up to the entrance (0.0 m).
+The direction and the size of the outside stairs are not known. Correct them if necessary.
+
+Rooms (Home Assistant area names):
+- Kitchen: x 0 m to 10.5 m, y 5.25 m to 8 m.
+- Gard = Garderoben (walk-in closet): x 10.5 m to 12.5 m, y 5.25 m to 8 m.
+- Bedroom: x 12.5 m to 16 m, y 3.75 m to 8 m.
+- Office (shared office): x 12.5 m to 16 m, y 0 m to 3.75 m.
+  Home Assistant has two areas for this room: "Albins kontor" and "Emmas Office".
+  The two individual offices do not exist now.
+- Bathroom: x 9 m to 12.5 m, y 0 m to 2.75 m.
+- Biblioteket (library): x 0 m to 5.5 m, y 0 m to 5.25 m.
+- Hallen: entrance hall and center hall, x 5.5 m to 12.5 m, y 0 m to 5.25 m.
+
+Open areas (no wall):
+- The kitchen is open to the east room at x 0 m to 2.5 m.
+- The entrance hall (with the stairs) is open to the center hall.
+
+Arched openings (DDD):
+- Center hall to kitchen: south wall of the center hall, x 6 m to 7.5 m.
+- Center hall to east room: x 5.5 m, y 3.5 m to 5 m.
+
+Kitchen south door:
+- The door "D" in the south wall (x 8.25 m) goes to the altan.
+- The door is at the same level as the main entrance (0.0 m).
+
+Altan (deck):
+- The altan is on the south side of the house, at the main floor level (0.0 m).
+- The altan is along the south wall from x 0 m to x 9 m.
+- From x 0 m to x 4 m, the altan is on posts. The ground below it goes down to -2.4 m.
+- From x 4 m to x 9 m, the altan is at the ground level.
+- Home Assistant area: Terass.
+- The altan is outside the 16 m x 8 m outline.
+- The depth of the altan (north-south) is approximately 5 m.
+
+East balcony:
+- The door "D" in the east wall (y 2.5 m to 3 m) goes to a balcony.
+- The balcony is under the main roof.
+- The balcony is outside the 16 m x 8 m outline.
+- The balcony is along the full east wall (y 0 m to 8 m).
+- The balcony connects to the altan.
+- The depth of the balcony (east-west) is approximately 2 m.
+
+
+FLOOR: Downstairs (basement, -2.4 m)
+
+                SOUTH (back of the house, far from the viewer)
+       0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  m
+      +----------------------------------------------------------------+
+      |. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+   7 m|. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+      |. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+   6 m|. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+      |. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+   5 m|. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+      |. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+   4 m|. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+EAST  |. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |  WEST
+   3 m|. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+      |. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+   2 m|. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+      |. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+   1 m|. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+      |. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+   0 m|. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+      +----------------------------------------------------------------+
+                 NORTH (front of the house, faces the viewer)
+
+The top of the basement is approximately 0.9 m above the ground at the north entrance.
+The east side of the basement is fully above the ground.
+The west side of the basement is below the ground.
+
+
+NORTH FACADE (ELEVATION) - the view from the viewer
+
+       0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  m
++2.5 m+----------------------------------------------------------------+  top of the main floor wall (roof not shown)
+      |                           MAIN FLOOR                           |
+      |                          EEEE                                  |
+      |                          EEEE                                  |
+      |                          EEEE                                  |
+ 0.0 m+==========================EEEE==================================+  main floor level = entrance door sill
+      |                        ssssssss                                |  outside stairs, rise approx. 0.9 m
+-0.9 m~~~~~~~~~~~~~~~~~~~~~~~~~ssssssss~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  GROUND at the north entrance (the drawing does not show the slope at the east end)
+      |                     BASEMENT (Downstairs)                      |
+      |                                                                |
+-2.4 m+----------------------------------------------------------------+  basement floor

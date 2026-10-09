@@ -1,0 +1,107 @@
+# House dashboard: isometric cyberpunk floorplan.
+# Paste this file into: Dashboard > Edit > three dots > Raw configuration editor.
+# Requires the "Floorplan" card from HACS (ExperienceLovelace/ha-floorplan).
+#
+# Make sure that the entity IDs are correct. Look in Developer Tools > States.
+# The entity IDs are confirmed for this house.
+# Change "?v=1" to a new number after you copy new SVG or CSS files to Home Assistant.
+
+title: House
+views:
+  - title: House
+    path: house
+    icon: mdi:floor-plan
+    type: panel
+    cards:
+      - type: custom:floorplan-card
+        full_height: true
+        config:
+          image: /local/floorplan/house.svg?v=1
+          stylesheet: /local/floorplan/house.css?v=1
+          defaults:
+            hover_action: hover-info
+            tap_action: false
+          rules:
+            # Lights: a tap on a room toggles the light.
+            # The room glows when the light is on.
+            - entity: light.kitchen
+              element: room-kitchen
+              tap_action: &toggle
+                action: call-service
+                service: homeassistant.toggle
+              state_action: &light_class
+                action: call-service
+                service: floorplan.class_set
+                service_data:
+                  class: '${entity.state === "on" ? "light-on" : entity.state === "off" ? "light-off" : "light-unavailable"}'
+
+            - entity: light.garderoben
+              element: room-garderoben
+              tap_action: *toggle
+              state_action: *light_class
+
+            - entity: light.bedroom
+              element: room-bedroom
+              tap_action: *toggle
+              state_action: *light_class
+
+            - entity: light.albins_kontor
+              element: room-office
+              tap_action: *toggle
+              state_action: *light_class
+
+            - entity: light.bathroom
+              element: room-bathroom
+              tap_action: *toggle
+              state_action: *light_class
+
+            - entity: light.biblioteket
+              element: room-biblioteket
+              tap_action: *toggle
+              state_action: *light_class
+
+            - entity: light.hallen
+              element: room-hallen
+              tap_action: *toggle
+              state_action: *light_class
+
+            - entity: light.terass
+              element: room-terass
+              tap_action: *toggle
+              state_action: *light_class
+
+            - entity: light.front_door
+              element: front-door
+              tap_action: *toggle
+              state_action: *light_class
+
+            - entity: light.downstairs
+              element: room-downstairs
+              tap_action: *toggle
+              state_action: *light_class
+
+            # Motion: a ring pulses on the floor when the sensor detects motion.
+            - entity: binary_sensor.bathroom_motion
+              element: motion-bathroom
+              state_action: &motion_class
+                action: call-service
+                service: floorplan.class_set
+                service_data:
+                  class: '${entity.state === "on" ? "motion-on" : "motion-off"}'
+
+            - entity: binary_sensor.hallen_motion
+              element: motion-hallen
+              state_action: *motion_class
+
+            # Temperature: a text in the room.
+            - entity: sensor.bathroom_temperature
+              element: temp-bathroom
+              state_action: &temp_text
+                action: call-service
+                service: floorplan.text_set
+                service_data:
+                  text: '${isNaN(parseFloat(entity.state)) ? "--.- °C" : parseFloat(entity.state).toFixed(1) + " °C"}'
+
+            - entity: sensor.hallen_temperature
+              element: temp-hallen
+              state_action: *temp_text

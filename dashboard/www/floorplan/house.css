@@ -1,0 +1,104 @@
+/* House floorplan: cyberpunk style for the ha-floorplan card.
+   The card sets these classes on the SVG elements:
+   - light-on, light-off, light-unavailable on room-<area>, room-downstairs and front-door.
+   - motion-on, motion-off on motion-<area>. */
+
+/* Only the rooms and the entrance stairs accept a tap. */
+svg * {
+  pointer-events: none;
+}
+
+[id^="room-"],
+#front-door {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+/* Room floors ------------------------------------------------------------- */
+
+.light-off {
+  fill-opacity: 0.08;
+  transition: fill-opacity 0.8s ease;
+}
+
+.light-on {
+  fill-opacity: 0.55;
+  filter: url(#glow);
+  transition: fill-opacity 0.8s ease;
+  animation: neon-on 0.9s ease-out 1;
+}
+
+.light-unavailable {
+  fill-opacity: 0.03;
+  stroke-dasharray: 4 4;
+  stroke-opacity: 0.4;
+}
+
+/* The light goes on with a short neon flicker. */
+@keyframes neon-on {
+  0%   { fill-opacity: 0.08; }
+  15%  { fill-opacity: 0.6; }
+  25%  { fill-opacity: 0.15; }
+  40%  { fill-opacity: 0.55; }
+  50%  { fill-opacity: 0.25; }
+  100% { fill-opacity: 0.55; }
+}
+
+/* Groups: the basement and the entrance stairs ---------------------------- */
+
+/* The last polygon is the top of the basement, below the main floor. Do not light it. */
+#room-downstairs.light-on polygon:not(:last-child) {
+  fill: #00f0ff;
+  fill-opacity: 0.15;
+}
+
+#front-door.light-on polygon {
+  fill: #fcee0a;
+  fill-opacity: 0.35;
+}
+
+/* The group class must not change the opacity of the group itself. */
+g.light-on,
+g.light-off,
+g.light-unavailable {
+  fill-opacity: 1;
+  filter: none;
+  animation: none;
+}
+
+/* Terass deck ------------------------------------------------------------- */
+
+#room-terass.light-off {
+  fill-opacity: 0.9;
+}
+
+#room-terass.light-on {
+  fill: #ff8a2b;
+  fill-opacity: 0.45;
+}
+
+/* Motion rings ------------------------------------------------------------ */
+
+.motion-off {
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+.motion-on {
+  opacity: 1;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: motion-pulse 1.2s ease-out infinite;
+}
+
+@keyframes motion-pulse {
+  0%   { transform: scale(0.5); stroke-opacity: 1; }
+  100% { transform: scale(1.4); stroke-opacity: 0; }
+}
+
+/* Temperature texts ------------------------------------------------------- */
+
+[id^="temp-"] {
+  font-size: 11px;
+  opacity: 0.85;
+}
