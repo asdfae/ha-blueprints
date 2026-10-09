@@ -1,6 +1,7 @@
 # House dashboard: isometric cyberpunk floorplan.
 # Paste this file into: Dashboard > Edit > three dots > Raw configuration editor.
 # Requires the "Floorplan" card from HACS (ExperienceLovelace/ha-floorplan).
+# Requires "Browser Mod" from HACS (thomasloven/hass-browser_mod) for the room cards.
 #
 # Make sure that the entity IDs are correct. Look in Developer Tools > States.
 # The entity IDs are confirmed for this house.
@@ -45,9 +46,64 @@ views:
               tap_action: *toggle
               state_action: *light_class
 
+            # Office: a tap opens the room card (browser_mod pop-up).
+            # A hold toggles the light.
             - entity: light.albins_kontor
               element: room-office
-              tap_action: *toggle
+              tap_action:
+                action: call-service
+                service: floorplan.execute
+                service_data:
+                  open_office_card: |
+                    >
+                    // Open the pop-up in this browser only (a Browser Mod "browser call").
+                    // This is the same event as a "fire-dom-event" dashboard action.
+                    console.info('[house] Open the office card');
+                    const popup = {
+                      title: 'OFFICE',
+                      content: {
+                        type: 'vertical-stack',
+                        cards: [
+                          {
+                            type: 'tile',
+                            entity: 'light.albins_kontor',
+                            name: 'Lights',
+                            features: [{ type: 'light-brightness' }],
+                          },
+                          {
+                            type: 'entities',
+                            entities: [
+                              { entity: 'button.wake_on_lan_04_d4_c4_52_94_df', name: 'Albin PC', icon: 'mdi:desktop-tower' },
+                              { entity: 'button.wake_on_lan_fc_34_97_69_bc_e5', name: 'Emma PC', icon: 'mdi:desktop-tower' },
+                            ],
+                          },
+                        ],
+                      },
+                      popup_styles: [{
+                        style: 'all',
+                        styles: `
+                          ha-dialog {
+                            --ha-dialog-surface-background: #070b16;
+                            --ha-card-background: #0b1424;
+                            --primary-text-color: #e8f6ff;
+                            --secondary-text-color: #7fa8c9;
+                            --primary-color: #39ff88;
+                            --state-icon-color: #39ff88;
+                            --popup-border-radius: 4px;
+                            font-family: Consolas, 'Courier New', monospace;
+                            letter-spacing: 1px;
+                          }
+                          ha-card {
+                            border: 1px solid #39ff88;
+                            box-shadow: 0 0 12px rgba(57, 255, 136, 0.35);
+                          }
+                        `,
+                      }],
+                    };
+                    const event = new Event('ll-custom', { bubbles: true, composed: true });
+                    event.detail = { browser_mod: { service: 'browser_mod.popup', data: popup } };
+                    document.body.dispatchEvent(event);
+              hold_action: *toggle
               state_action: *light_class
 
             - entity: light.bathroom

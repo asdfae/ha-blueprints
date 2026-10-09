@@ -5,6 +5,8 @@ It uses the Floorplan card ([ExperienceLovelace/ha-floorplan](https://github.com
 
 - When a light is on, its room glows.
 - When you tap a room, its light goes on or off.
+- Some rooms have a room card. When you tap such a room, the room card opens.
+  To toggle the light in such a room, hold the room. See "Room cards".
 - When a motion sensor detects motion, a red ring pulses on the floor.
 - The bathroom and the hall show the temperature.
 
@@ -21,18 +23,21 @@ It uses the Floorplan card ([ExperienceLovelace/ha-floorplan](https://github.com
 
 1. Install HACS, if it is not installed.
 2. In HACS, find "Floorplan" and download it.
-3. Refresh the browser.
-4. Copy `house.svg` and `house.css` to the `/config/www/floorplan/` folder in Home Assistant.
-5. Restart Home Assistant. Then open these two addresses in a browser:
+3. In HACS, find "Browser Mod" and download it. Restart Home Assistant.
+   Go to **Settings > Devices & services > Add integration** and add "Browser Mod".
+   The room cards need Browser Mod. If you do not add the integration, the room cards do not open.
+4. Refresh the browser.
+5. Copy `house.svg` and `house.css` to the `/config/www/floorplan/` folder in Home Assistant.
+6. Restart Home Assistant. Then open these two addresses in a browser:
    - `http://<ha-address>:8123/local/floorplan/house.svg`: make sure that you see the floorplan.
    - `http://<ha-address>:8123/local/floorplan/house.css`: make sure that you see the CSS text.
 
    If you get "404", the file is not in the correct folder or its name is incorrect.
    If the card cannot load the CSS file, the rooms do not glow and a tap does nothing.
-6. Go to **Settings > Dashboards**. Select **Add dashboard > New dashboard from scratch**. Give it the name "House".
-7. Open the new dashboard. Select the pencil icon, then the three dots, then **Raw configuration editor**.
-8. Replace all the text with the contents of `dashboard.yaml`. Select **Save**.
-9. Make sure that the entity IDs are correct. See the next section.
+7. Go to **Settings > Dashboards**. Select **Add dashboard > New dashboard from scratch**. Give it the name "House".
+8. Open the new dashboard. Select the pencil icon, then the three dots, then **Raw configuration editor**.
+9. Replace all the text with the contents of `dashboard.yaml`. Select **Save**.
+10. Make sure that the entity IDs are correct. See the next section.
 
 ## Entity IDs
 
@@ -55,8 +60,21 @@ If you replace or rename a device, compare the IDs with **Developer Tools > Stat
 | `motion-hallen` | `binary_sensor.hallen_motion` | Confirmed |
 | `temp-bathroom` | `sensor.bathroom_temperature` | Confirmed |
 | `temp-hallen` | `sensor.hallen_temperature` | Confirmed |
+| Office room card: Albin PC (Wake on LAN) | `button.wake_on_lan_04_d4_c4_52_94_df` | Confirmed |
+| Office room card: Emma PC (Wake on LAN) | `button.wake_on_lan_fc_34_97_69_bc_e5` | Confirmed |
 
 If an entity ID is incorrect, the room stays dark. The browser console shows an error from the Floorplan card.
+
+## Room cards
+
+A room card is a Browser Mod pop-up. It shows more devices than the lights.
+
+| Room | Tap | Hold | Room card contents |
+|---|---|---|---|
+| Office | Opens the room card | Toggles the light | Light with brightness, Albin PC and Emma PC (Wake on LAN) |
+
+To add a room card to a different room, copy the office rule in `dashboard.yaml`.
+Then change the element, the entities and the title.
 
 ## Change the floorplan
 
